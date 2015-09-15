@@ -1,17 +1,12 @@
-function o = T4Q2_approximatedFunc(x, V, W, numNeuron, a, b) 
-    y = zeros(numNeuron+1);
-    o = zeros(1);
+function O = T4Q2_approximatedFunc(X, V, W, numNeuron, a, b) 
+    X = vertcat(X, repmat(-1, 1, size(X, 2)));    
     % Synaptic output of the hidden layer
-    u = V * x;           
+    U = V * X;           
     % Output of the hidden layer
-    for j = 1 : numNeuron 
-       y(j) = a * (1 - exp(-b*u(j))) / (1 + exp(-b*u(j)));
-    end
-    y(numNeuron + 1) = -1;
+    Y = a * (1 - exp(-b*U)) ./ (1 + exp(-b*U));
+    Y = vertcat(Y, repmat(-1, 1, size(Y, 2)));    
     % Synaptic output of output layer
-    s = W * y;
+    S = W * Y;
     % Output
-    for j = 1 : 1 % only 1 neuron on output layer
-       o(j) = a * (1 - exp(-b*s(j))) / (1 + exp(-b*s(j)));
-    end    
+    O = a * (1 - exp(-b*S)) ./ (1 + exp(-b*S));    
 end 
