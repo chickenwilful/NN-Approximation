@@ -1,6 +1,6 @@
 clc
 MAXEPOCHS = 5000; % maximum number of iteration
-MAXNEURONS = 10; % Set maximum number of neurons
+MAXNEURONS = 20; % Set maximum number of neurons
 
 % learning parameters for activation function: 
 % f(u) = a(1 - exp(-b * u)) / (1 + exp(-b * u))
@@ -16,6 +16,7 @@ Dataset = -1 : 1/10 : 1;
 % Take out Test set, to preserve
 [trainValidateSet, testSet] = T4Q2_subsampling(Dataset, 21, 0);
 
+%% Data Random Subsampling
 for i = 1:split
     disp(['Split #' num2str(i) ':']);
     % Training set & Validation set
@@ -26,6 +27,7 @@ for i = 1:split
         error(i,numNeuron) = EVal;
     end  
 end
+
 %% Plot MSE according to #Neuron
 error
 avgTestErr = mean(error)
@@ -49,44 +51,32 @@ minErrIndex
 V_opt
 W_opt
 
-%% True test error estimate 
-% desiredResult = 0.8 * sin(pi * testSet);
-% true_test_error = T4Q2_calcMSE(testSet, desiredResult, V_opt, W_opt, numNeuron_opt, a, b);
-% true_test_error
-
-% %% Plot approximated function on test set
-% desire = (1);
-% approximated = (1);
-% data = testSet;
-% data = sort(data);
-% % for i = 1: size(data, 2)
-%     desire = 0.8 * sin(pi * data);
-%     approximated = T4Q2_approximatedFunc(data, V_opt, W_opt, numNeuron_opt, a, b);
-% % end
-% size(desire)
-% size(approximated)
-% figure(22), plot(data, desire, '-b', data, approximated, '-r'); hold on;
-% legend('True value', 'Approximated value')
-% title('Approximated Function on Testing')
-% xlabel('x')
-% hold off;
-%     
+%% Plot approximated function on test set
+data = validationSet;
+data = sort(data);
+desire = 0.8 * sin(pi * data);
+approximated = T4Q2_approximatedFunc(data, V_opt, W_opt, numNeuron_opt, a, b);
+figure(22), plot(data, desire, '-b', data, approximated, '-r'); hold on;
+legend('True value', 'Approximated value')
+title('Approximated Function on Test Set')
+xlabel('x')
+hold off;
 
 %% Plot approximated function on the whole dataset
-desire = (1);
-approximated = (1);
 data = Dataset;
 data = sort(data);
-for i = 1: size(data, 2)
-    desire(i) = 0.8 * sin(pi * data(i));
-    approximated(i) = T4Q2_approximatedFunc(data(i), V_opt, W_opt, numNeuron_opt, a, b);
-end
+desire = 0.8 * sin(pi * data);
+approximated = T4Q2_approximatedFunc(data, V_opt, W_opt, numNeuron_opt, a, b);
 figure(23), plot(data, desire, '-b', data, approximated, '-r'); hold on;
 legend('True value', 'Approximated value')
 title('Approximated Function on whole datas')
 xlabel('x')
 hold off;
 
+%% True test error estimate 
+% desiredResult = 0.8 * sin(pi * testSet);
+% true_test_error = T4Q2_calcMSE(testSet, desiredResult, V_opt, W_opt, numNeuron_opt, a, b);
+% true_test_error
 
 
 

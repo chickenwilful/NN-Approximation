@@ -48,7 +48,7 @@ function [V_opt, W_opt, eTrain, eValidate] = T4Q2_approximatorMLP(trainSet, vali
             W_opt = W;
             V_opt = V;
             iter_opt = t-1;
-            break;
+%             break;
         end
         eValOld = eValidate;
         eTrain = e / size(trainSet, 2); % MSE
@@ -65,7 +65,7 @@ function [V_opt, W_opt, eTrain, eValidate] = T4Q2_approximatorMLP(trainSet, vali
     %% Plot results
     figure(numNeuron), plot(ePlotTrain, 'color', 'b'); hold on;
     plot(ePlotTest, 'color', 'r');
-    line([iter_opt iter_opt],get(gca,'YLim'),'Color',[1 0 0])
+    line([iter_opt iter_opt],get(gca,'YLim'),'color','k', 'LineStyle','-.');
     legend('Train Error', 'Test Error')
     title(strcat('Error Each Iteration at #Neuron=', num2str(numNeuron)));
     xlabel('Iteration')
