@@ -1,6 +1,6 @@
 clc
 MAXEPOCHS = 5000; % maximum number of iteration
-MAXNEURONS = 20; % Set maximum number of neurons
+MAXNEURONS = 15; % Set maximum number of neurons
 
 % learning parameters for activation function: 
 % f(u) = a(1 - exp(-b * u)) / (1 + exp(-b * u))
@@ -46,6 +46,7 @@ numNeuron_opt = minErrIndex;
 [trainSet, validationSet] = T4Q2_subsampling(trainValidateSet, 14, 7);
 [V_opt, W_opt, ETrain, EVal] = T4Q2_approximatorMLP(trainSet, validationSet, numNeuron_opt, MAXEPOCHS, a, b, alpha);
 
+disp(['Test Error = ' num2str(EVal)]);
 disp('Final Model Configuration')
 minErrIndex
 V_opt
